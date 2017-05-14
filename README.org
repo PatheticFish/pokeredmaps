@@ -1,0 +1,27 @@
+#+TITLE: Pokemon Red Disassembly Map Tools
+#+AUTHOR: Lumage
+
+/This set of tools is unfinished (as of 14 May 2017): writing values of any kind is not yet possible/
+
+** About
+This is a set of powershell commands for dealing with map files from the [[https://github.com/pret][pret]] disassembly of Pokémon Red/Blue
+
+Access the disassembly repository here: [[https://github.com/pret/pokered]]
+
+** Command Overview
+| Command        | Description                 |
+|----------------+-----------------------------|
+| map            | Summarizes map information  |
+| mapheaders     | Get tileset/dimensions info |
+| mapconnections | Get overworld connections   |
+| mapdata        | Get map blocks              |
+*** To be implemented
+| Command    | Description                                |
+|------------+--------------------------------------------|
+| mapobjects | Get border tile, warps, signs, and objects |
+| mapmusic   | Get music played on map                    |
+| maptext    | Get map text definitions                   |
+| mapscript  | Get script file associated with map        |
+
+In-depth help is available from Powershell's Get-Help cmdlet
+
