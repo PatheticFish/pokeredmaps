@@ -23,7 +23,7 @@
 #   As constants (in data), as ASM pointers, and as filenames.
 #
 #.LINK
-# Github: https://github.com/PatheticFish/pokeredmaps
+# https://github.com/PatheticFish/pokeredmaps
 #
 #.LINK
 # map
