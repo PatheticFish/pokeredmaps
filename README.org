@@ -15,7 +15,9 @@ Access the disassembly repository here: [[https://github.com/pret/pokered]]
 | mapheaders     | Get tileset/dimensions info |
 | mapconnections | Get overworld connections   |
 | mapdata        | Get map blocks              |
+
 *** To be implemented
+
 | Command    | Description                                |
 |------------+--------------------------------------------|
 | mapobjects | Get border tile, warps, signs, and objects |
@@ -37,11 +39,12 @@ named "pokered", ~$basepath~ should automatically set itself correctly when
 you run ~pokeredmaps.ps1~.  Otherwise, set the directory manually by running
 ~map~ with the ~-basepath~ parameter.
 
-*Note: As some commands ~map~ will call have not been implemented, you may get some error output when running it.  Please ignore this.*
+*Note: As some commands* ~map~ *will call have not been implemented, you may get some error output when running it.  Please ignore this.*
 
-Powershell may warn you about unsafe scripts.  If so, run
+Powershell may prevent you from running downloaded scripts.  If so, run
 #+BEGIN_SRC powershell
 Set-ExecutionPolicy Unrestricted
 #+END_SRC
 Or, explicitly unblock the script from its properties menu and use a 
 tighter restriction policy such as ~RemoteSigned~
+
