@@ -1,4 +1,4 @@
-﻿#.SYNOPSIS
+#.SYNOPSIS
 # A set of command-line tools for dealing with Pokemon Red Disassembly maps.
 #
 #.DESCRIPTION
@@ -45,6 +45,7 @@
 $basepath = $PWD.Path.substring(0,$PWD.Path.LastIndexOf("\pokered")+8)
 $scriptdir = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
 $MapNameDictionary = Import-Csv "$scriptdir\mapnamedictionary.csv"
+#ASM Data index constants
 Set-Variable POKERED_TILESET -option Constant -value 1
 Set-Variable POKERED_DIMENSIONS -option Constant -value 2
 Set-Variable POKERED_DEFS -option Constant -value 3
@@ -241,6 +242,7 @@ function mapobjects {
           [Alias("w")][Parameter(Mandatory=$False)][Object[]]$warps,
           [Alias("s")][Parameter(Mandatory=$False)][Object[]]$signs,
           [Alias("o")][Parameter(Mandatory=$False)][Object[]]$objects)
+
 }
 
 function mapdata {
@@ -289,6 +291,10 @@ function Get-MapConnections {
 function Get-MapBorder {
     param([Parameter(Mandatory=$True,Position=0)][String]$MapName)
     $value = Get-ASMDataLine "$basepath/data/mapObjects/$MapName.asm" $POKERED_BORDER
+    if ($value -match '\$([1-9a-fA-F]+)') {
+        $tile = $Matches[1]
+        return [int]"0x$tile"
+    }
 }
 
 #Helper function for creating the compass object. Note the default value of $null
