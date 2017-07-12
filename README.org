@@ -1,10 +1,10 @@
 #+TITLE: Pokemon Red Disassembly Map Tools
 #+AUTHOR: Lumage
 
-/This set of tools is unfinished (as of 14 May 2017): writing values of any kind is not yet possible/
+/This set of tools is unfinished (as of 11 July 2017): writing values of any kind is not yet possible/
 
 ** About
-This is a set of powershell commands for dealing with map files from the [[https://github.com/pret][pret]] disassembly of PokÃ©mon Red/Blue
+This is a set of powershell commands for dealing with map files from the [[https://github.com/pret][pret]] disassembly of Pokémon Red/Blue
 
 Access the disassembly repository here: [[https://github.com/pret/pokered]]
 
