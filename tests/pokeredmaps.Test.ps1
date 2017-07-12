@@ -49,13 +49,13 @@
             mapheaders "pallettown" -dimensions @(1,2)
             (mapheaders "pallettown") | Should BeExactly @{width = 1; height = 2; tileset = "OVERWORLD"}
             mapheaders "pallettown" -dimensions @($headerobject.width,$headerobject.height)
-            (mapheaders "pallettown").tileset | Should BeExactly $headerobject
+            (mapheaders "pallettown") | Should BeExactly $headerobject
         }
 
         It "ignores invalid dimensions" {
-            {mapheaders "pallettown" -dimensions @(-1,1)} | Should Throw
+            {mapheaders "pallettown" -dimensions @(-1,1)}  | Should Throw
             {mapheaders "pallettown" -dimensions @("s",1)} | Should Throw
-            {mapheaders "pallettown" -dimensions @(1,-1)} | Should Throw
+            {mapheaders "pallettown" -dimensions @(1,-1)}  | Should Throw
             {mapheaders "pallettown" -dimensions @(1,"s")} | Should Throw
         }
     }
