@@ -1,4 +1,4 @@
-#.SYNOPSIS
+﻿#.SYNOPSIS
 # A set of command-line tools for dealing with Pokemon Red Disassembly maps.
 #
 #.DESCRIPTION
@@ -242,7 +242,9 @@ function mapobjects {
           [Alias("w")][Parameter(Mandatory=$False)][Object[]]$warps,
           [Alias("s")][Parameter(Mandatory=$False)][Object[]]$signs,
           [Alias("o")][Parameter(Mandatory=$False)][Object[]]$objects)
-
+    $MapNames = ($MapNameDictionary -imatch $MapName)[0]
+    $mapObjectText = Get-Content ("$basepath/data/mapObjects/"+$MapNames.file+".asm")
+    $border = Get-MapBorder $mapObjectText
 }
 
 function mapdata {
@@ -251,6 +253,8 @@ function mapdata {
     $MapName = ($MapNameDictionary -imatch $MapName)[0].file
     return (Get-Content "$basepath/maps/$MapName.blk") -join "`n" | Convert-MapBytesToText -Width $width
 }
+
+
 #Helper function for dealing with ASM data, strips comments and splits data statements
 #Return one data line... maybe make this optional.
 function Get-ASMDataLine {
@@ -275,7 +279,7 @@ function Get-MapDimensions {
 function Get-MapConnections {
     param([Parameter(Mandatory=$True,Position=0)][String]$MapName)
     $connection = Get-ASMDataLine "$basepath/data/mapHeaders/$MapName.asm" $POKERED_CONNECTIONS
-    if ($connection.Trim().Equals('$00')) {
+    if (0 -eq (ConvertFrom-Hex $connection)) {
         return Create-MapConnectionsTable
     }
     $connection = $connection -split "`n"
@@ -289,15 +293,21 @@ function Get-MapConnections {
 }
 
 function Get-MapBorder {
-    param([Parameter(Mandatory=$True,Position=0)][String]$MapName)
-    $value = Get-ASMDataLine "$basepath/data/mapObjects/$MapName.asm" $POKERED_BORDER
-    if ($value -match '\$([1-9a-fA-F]+)') {
-        $tile = $Matches[1]
-        return [int]"0x$tile"
+    param([Parameter(Mandatory=$True,Position=0)][String]$MapObjects)
+    $value = ($MapObjects -split "db")[$POKERED_BORDER]
+    if ($value -match '\$[1-9a-fA-F]+') {
+        return ConvertFrom-Hex $Matches[0]
+    } else {
+        throw "SOMETHING went wrong parsing $value"
     }
 }
+function Get-MapWarps {
+    param([Parameter(Mandatory=$True,Position=0)][String]$MapObjects)
+    
 
-#Helper function for creating the compass object. Note the default value of $null
+}
+
+#Helper function for creating the compass object. Note the default valuhe of $null
 function Create-MapConnectionsTable {
     param([Parameter(Mandatory=$False,Position=0)][Object]$North = $null,
         [Parameter(Mandatory=$False,Position=1)][Object]$South = $null,
@@ -320,4 +330,9 @@ function Convert-MapBytesToText {
 function Convert-MapStringToBytes {
     param([Parameter(Mandatory=$True,Position=1,ValueFromPipeline=$True)][String]$In)
     [System.Text.Encoding]::UTF8.GetString(($In -replace "[ `n]", "") -split ',')
+}
+
+function ConvertFrom-Hex {
+    param($h)
+    return [Convert]::ToInt16(($h -replace "[\$ ]",""),16)
 }

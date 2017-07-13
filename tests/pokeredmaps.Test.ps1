@@ -1,7 +1,12 @@
-﻿Describe "mapheaders" {
+﻿$MapNameDictionary = Import-Csv "$scriptdir\mapnamedictionary.csv"
+function ConvertFrom-Hex {
+    param($h)
+    return [Convert]::ToInt16(($h -replace "\$",""),16)
+}
+
+Describe "mapheaders" {
     $tilesetlist = (Get-Content .\tilesetlist.txt) -split "`n"
     $dataregex = [regex]"`tdb\s(\w+)"
-    $MapNameDictionary = Import-Csv "$scriptdir\mapnamedictionary.csv"
     $MapDimensionsTable = Import-Csv "$scriptdir\mapdimensions.csv"
 
     Context "Tilesets" {
@@ -59,4 +64,33 @@
             {mapheaders "pallettown" -dimensions @(1,"s")} | Should Throw
         }
     }
+}
+
+Describe "mapobjects" {
+    Context "Reading Objects" {
+        $MapNameDictionary | ForEach-Object {
+            $map = $_.file
+            $objects = mapobjects $map
+            $correctobjectset = ((Get-Content "$basepath/mapObjects/$map.asm")[1..50] -replace ";.*","" -replace ",","" | ConvertFrom-Csv -Header type,c1,c2,c3,c4,c5,c6 -Delimiter " ")
+
+            It "gets border for $map" {
+                $objects.border | Should Be ConvertFrom-Hex($correctobjectset[0].c1)
+            }
+            It "gets warps for $map" {
+                $objects.warps.length | Should Be ($i1 = ConvertFrom-Hex($correctobjectset[1].c1))
+            }
+            It "gets signs for $map" {
+                $objects.signs.length | Should Be ($i2 = $correctobjectset[2+$i1])
+            }
+            It "gets objects for $map" {
+                $objects.objects.length | Should Be $correctobjectset[3+$i1+$i2]
+            }
+            It "gets warptos for $map" {
+                $objects.warptos.length | Should Be ($correctobjectset | Where {$_.type -eq "EVENT_DISP" }).length
+            }
+        }
+    }
+    #Context "Writing Objects" {
+    #
+    #}
 }
