@@ -1,14 +1,15 @@
 #+TITLE: Pokemon Red Disassembly Map Tools
 #+AUTHOR: Lumage
+Never mind this, just use [[https://github.com/pret/pokemon-reverse-engineering-tools/blob/0e1798937a4bf723813574281d0dc12c471c9199/pokemontools/map_editor.py]]
 
-/This set of tools is unfinished (as of 13 July 2017): writing values of any kind is not yet possible/
++/This set of tools is unfinished (as of 13 July 2017): writing values of any kind is not yet possible/+
 
-** About
-This is a set of powershell commands for dealing with map files from the [[https://github.com/pret][pret]] disassembly of Pokémon Red/Blue
+** +About+
++This is a set of powershell commands for dealing with map files from the [[https://github.com/pret][pret]] disassembly of PokÃ©mon Red/Blue+
 
-Access the disassembly repository here: [[https://github.com/pret/pokered]]
++Access the disassembly repository here: [[https://github.com/pret/pokered]]+
 
-** Command Overview
+** +Command Overview+
 | Command        | Description                 |
 |----------------+-----------------------------|
 | map            | Summarizes map information  |
@@ -16,7 +17,7 @@ Access the disassembly repository here: [[https://github.com/pret/pokered]]
 | mapconnections | Get overworld connections   |
 | mapdata        | Get map blocks              |
 
-*** To be implemented
+*** +To be implemented+
 
 | Command    | Description                                  |
 |------------+----------------------------------------------|
@@ -25,26 +26,26 @@ Access the disassembly repository here: [[https://github.com/pret/pokered]]
 | maptext    | Get map text definitions                     |
 | mapscript  | Get script file associated with map          |
 
-In-depth help is available from Powershell's Get-Help cmdlet
++In-depth help is available from Powershell's Get-Help cmdlet+
 
-** Usage
-First, you'll need a copy of the [[https://github.com/pret/pokered][disassembly]].  
-Make a directory for it, preferably with the root folder named "pokered" (optional).
+** +Usage+
++First, you'll need a copy of the [[https://github.com/pret/pokered][disassembly]].+  
++Make a directory for it, preferably with the root folder named "pokered" (optional).+
 
-Download these files, specifically ~pokeredmaps.ps1~ and ~mapnamedictionary.csv~ 
-to some location.
++Download these files, specifically ~pokeredmaps.ps1~ and ~mapnamedictionary.csv~ +
++to some location.+
 
-From Powershell, if you are inside your disassembly directory and it is 
-named "pokered", ~$basepath~ should automatically set itself correctly when 
-you run ~pokeredmaps.ps1~.  Otherwise, set the directory manually by running
-~map~ with the ~-basepath~ parameter.
++From Powershell, if you are inside your disassembly directory and it is +
++named "pokered", ~$basepath~ should automatically set itself correctly when +
++you run ~pokeredmaps.ps1~.  Otherwise, set the directory manually by running+
++~map~ with the ~-basepath~ parameter.+
 
-*Note: As some commands* ~map~ *will call have not been implemented, you may get some error output when running it.  Please ignore this.*
++*Note: As some commands* ~map~ *will call have not been implemented, you may get some error output when running it.  Please ignore this.*+
 
-Powershell may prevent you from running downloaded scripts.  If so, run
++Powershell may prevent you from running downloaded scripts.  If so, run+
 #+BEGIN_SRC powershell
 Set-ExecutionPolicy Unrestricted
 #+END_SRC
-Or, explicitly unblock the script from its properties menu and use a 
-tighter restriction policy such as ~RemoteSigned~
++Or, explicitly unblock the script from its properties menu and use a +
++tighter restriction policy such as ~RemoteSigned~+
 
